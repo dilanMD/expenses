@@ -1,3 +1,5 @@
+import { ADD_ACCOUNT, ADD_ACCOUNT_ERROR } from "../actions/types/accounts.js"
+
 const initialState = {
     accounts: [
         { key: "1", label: 'Wallet', amount: "505" },
@@ -7,7 +9,16 @@ const initialState = {
 }
 
 const accountReducer = (state = initialState, action) => {
-    return state
+    switch (action.type) {
+        case ADD_ACCOUNT:
+            console.log('Created account', action.payload)
+            return state
+        case ADD_ACCOUNT_ERROR:
+            console.log('Error in account creation', action.payload)
+            return state
+        default:
+            return state
+    }
 }
 
 export default accountReducer

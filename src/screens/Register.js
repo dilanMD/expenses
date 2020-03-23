@@ -6,9 +6,6 @@ import { ACCENT, ACCENT_DARK } from '../components/Colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 class Register extends Component {
-
-
-
     render() {
         return (
             <>

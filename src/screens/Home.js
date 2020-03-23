@@ -5,9 +5,7 @@ import MyTabs from '../components/Navigation'
 export default class Home extends Component {
     render() {
         return (
-            <NavigationContainer>
-                <MyTabs />
-            </NavigationContainer>
+            <MyTabs />
         )
     }
 }

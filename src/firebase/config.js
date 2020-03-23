@@ -1,4 +1,6 @@
-import Firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/auth'
 
 let config = {
     apiKey: 'AIzaSyDPDFJToWhm8IfMRFhRvxhKpdK8kgNLp4U',
@@ -8,5 +10,7 @@ let config = {
     storageBucket: 'expenses-1ccfb.appspot.com',
     messagingSenderId: '667966515131'
 }
-let app = Firebase.initializeApp(config)
-export const db = app.database()
+firebase.initializeApp(config)
+firebase.firestore()
+
+export default firebase

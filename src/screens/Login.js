@@ -4,8 +4,26 @@ import { connect } from "react-redux"
 import { Icon } from 'react-native-elements'
 import { ACCENT, ACCENT_DARK } from '../components/Colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { login } from '../redux/actions/authActions'
 
 class Login extends Component {
+    state = {
+        email: '',
+        password: ''
+    }
+
+    handleEmail = (text) => {
+        this.setState({ email: text })
+    }
+
+    handlePassword = (text) => {
+        this.setState({ password: text })
+    }
+
+    handleSubmit = () => {
+        this.props.login(this.state)
+    }
+
     render() {
         return (
             <>
@@ -16,24 +34,27 @@ class Login extends Component {
                         style={styles.logo}
                     />
                     <View style={styles.inputSection}>
-                        <Icon style={styles.inputIcon} name="account-circle" />
+                        <Icon style={styles.inputIcon} name="email" />
                         <TextInput
-                            placeholder='Username'
-                            onChangeText={text => console.log(text)}
+                            placeholder='email@address.com'
+                            onChangeText={this.handleEmail}
                             style={styles.input}
+                            autoCapitalize="none"
+                            keyboardType="email-address"
                         />
                     </View>
                     <View style={styles.inputSection}>
                         <Icon style={styles.inputIcon} name="lock" />
                         <TextInput
-                            placeholder='Password'
+                            placeholder='password'
                             secureTextEntry={true}
-                            onChangeText={text => console.log(text)}
+                            autoCapitalize="none"
+                            onChangeText={this.handlePassword}
                             style={styles.input}
                         />
                     </View>
                     <TouchableOpacity
-                        onPress={() => console.log('Login button pressed')}
+                        onPress={this.handleSubmit}
                         style={styles.registerContainer}
                     >
                         <Text style={styles.registerText}>LOGIN</Text>
@@ -52,7 +73,19 @@ class Login extends Component {
     }
 }
 
-export default connect()(Login)
+const mapStateToProps = (state) => {
+    return {
+        authError: state.authReducer.authError
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        login: (credentials) => dispatch(login(credentials))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
 
 const styles = StyleSheet.create({
     container: {
