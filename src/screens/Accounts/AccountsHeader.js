@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { StatusBar, View, Text, StyleSheet } from 'react-native'
+import { Appbar } from 'react-native-paper'
 import { connect } from "react-redux"
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
+import { logout } from '../../redux/actions/authActions'
 
 import { ACCENT, ACCENT_DARK } from '../../components/Colors'
 
@@ -11,10 +13,18 @@ class AccountsHeader extends Component {
         return (
             <>
                 <StatusBar backgroundColor={ACCENT_DARK} />
-                <View style={styles.header}>
-                    <Text style={styles.headerTitle}>All Accounts</Text>
-                    <Text style={styles.subTitle}>LKR </Text>
-                </View>
+                <Appbar.Header style={styles.header}>
+                    <Appbar.Content
+                        title="All Accounts"
+                        subtitle="LKR 2,000"
+                        style={styles.headerTitle}
+                    />
+                    <Appbar.Action
+                        icon="logout"
+                        style={styles.logout}
+                        onPress={() => this.props.logout()}
+                    />
+                </Appbar.Header>
             </>
         )
     }
@@ -26,9 +36,9 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = () => {
+const mapDispatchToProps = (dispatch) => {
     return {
-
+        logout: () => dispatch(logout())
     }
 }
 
@@ -43,15 +53,14 @@ const styles = StyleSheet.create({
     header: {
         height: 100,
         backgroundColor: ACCENT,
-        alignItems: "center"
     },
     headerTitle: {
         color: '#FFF',
         fontSize: 18,
-        marginTop: 10
+        alignItems: "center"
     },
-    subTitle: {
-        color: '#FFF',
-        marginTop: 5
+    logout: {
+        position: "absolute",
+        right: 0
     }
 })

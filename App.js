@@ -9,8 +9,8 @@ import Home from './src/screens/Home'
 class App extends Component {
 
     renderScreen = () => {
-        const { authError } = this.props
-        return authError == null ? <Home /> : <AuthStack />
+        const { isLoggedIn, authError } = this.props
+        return (isLoggedIn && authError == null) ? <Home /> : <AuthStack />
     }
 
     render() {
@@ -25,7 +25,8 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        authError: state.authReducer.authError
+        authError: state.authReducer.authError,
+        isLoggedIn: state.authReducer.isLoggedIn
     }
 }
 

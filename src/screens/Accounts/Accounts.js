@@ -12,7 +12,6 @@ class Accounts extends Component {
         const { accounts } = this.props
         return (
             <>
-                <StatusBar backgroundColor={ACCENT_DARK} />
                 <AccountsHeader />
                 <AccountsList />
                 <AccountsFab />
