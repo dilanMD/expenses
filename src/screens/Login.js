@@ -8,8 +8,8 @@ import { login } from '../redux/actions/authActions'
 
 class Login extends Component {
     state = {
-        email: '',
-        password: ''
+        email: 'deluxan.miui@gmail.com',
+        password: '123456'
     }
 
     handleEmail = (text) => {
@@ -30,7 +30,7 @@ class Login extends Component {
                 <StatusBar backgroundColor={ACCENT_DARK} />
                 <View style={styles.container}>
                     <Image
-                        source={require('../assets/images/logo.png')}
+                        source={require('../assets/images/expenses.png')}
                         style={styles.logo}
                     />
                     <View style={styles.inputSection}>

@@ -1,11 +1,14 @@
-import { ADD_ACCOUNT, ADD_ACCOUNT_ERROR } from "../actions/types/accounts.js"
+import {
+    ADD_ACCOUNT,
+    ADD_ACCOUNT_ERROR,
+    SHOW_UPDATE_COLOR,
+    HIDE_UPDATE_COLOR,
+} from "../actions/types/accounts.js"
 
 const initialState = {
-    accounts: [
-        { key: "1", label: 'Wallet', amount: "505" },
-        { key: "2", label: 'Commercial Bank', amount: "32,990.39" },
-        { key: "3", label: 'Peoples Bank', amount: "1116.75" },
-    ]
+    accounts: [],
+    accountColor: '',
+    updateColorModal: false
 }
 
 const accountReducer = (state = initialState, action) => {
@@ -16,6 +19,10 @@ const accountReducer = (state = initialState, action) => {
         case ADD_ACCOUNT_ERROR:
             console.log('Error in account creation', action.payload)
             return state
+        case SHOW_UPDATE_COLOR:
+            return { ...state, updateColorModal: true }
+        case HIDE_UPDATE_COLOR:
+            return { ...state, updateColorModal: false }
         default:
             return state
     }

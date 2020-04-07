@@ -1,23 +1,17 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, TextInput, Picker } from 'react-native'
+import { StyleSheet, View, Text, TextInput, Picker, TouchableOpacity, Modal } from 'react-native'
 import { FAB, Card, Button } from 'react-native-paper'
 import { connect } from "react-redux"
 import { createAccount } from '../../redux/actions/accountsActions'
-import Modal from 'react-native-modal'
-
-import { ACCENT, ACCENT_DARK, YELLOW } from '../../components/Colors'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { showAccountsAddModal } from '../../redux/actions/modalActions'
+import { ACCENT, ACCENT_DARK, YELLOW, GREY } from '../../components/Colors'
+import AccountsAdd from './AccountsAdd'
 
 class AccountsFab extends Component {
     state = {
-        isModalVisible: false,
         accountType: '',
         accountName: '',
         initialAmount: ''
-    };
-
-    toggleModal = () => {
-        this.setState({ isModalVisible: !this.state.isModalVisible });
     };
 
     handleAccountType = (value) => {
@@ -43,43 +37,18 @@ class AccountsFab extends Component {
         return (
             <>
                 <View style={{ flex: 1 }}>
-                    <Modal isVisible={this.state.isModalVisible} animationIn="bounceInUp" animationOut="bounceOutDown">
-                        <Card style={styles.modal}>
-                            <Card.Title title="Add Account" style={styles.title} />
-                            <Card.Content>
-                                <Picker onValueChange={this.handleAccountType} selectedValue={this.state.accountType}>
-                                    <Picker.Item label="Chose account type" value="" />
-                                    <Picker.Item label="Wallet" value="wallet" />
-                                    <Picker.Item label="Debit Card" value="debit" />
-                                    <Picker.Item label="Credit Card" value="credit" />
-                                </Picker>
-                                <TextInput
-                                    placeholder="Account name"
-                                    style={styles.input}
-                                    onChangeText={this.handleAccountName}
-                                />
-                                <TextInput
-                                    placeholder="Initial amount"
-                                    style={styles.input}
-                                    keyboardType="number-pad"
-                                    onChangeText={this.handleInitialAmount}
-                                />
-                            </Card.Content>
-                            <Card.Actions style={{ flexDirection: "row" }}>
-                                <TouchableOpacity style={styles.buttonContainer}>
-                                    <Text style={{ color: "#FFF" }} onPress={(e) => this.handleSubmit(e)}>ADD</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: YELLOW }]}>
-                                    <Text style={{ color: "#FFF" }} onPress={() => this.toggleModal()}>CANCEL</Text>
-                                </TouchableOpacity>
-                            </Card.Actions>
-                        </Card>
+                    <Modal
+                        animationType="slide"
+                        transparent={false}
+                        visible={this.props.modal.accountsAddModal}
+                    >
+                        <AccountsAdd />
                     </Modal>
                 </View>
                 <FAB
                     style={styles.fab}
                     icon="plus"
-                    onPress={() => this.toggleModal()}
+                    onPress={() => this.props.showAccountsAddModal()}
                 />
             </>
         )
@@ -88,13 +57,15 @@ class AccountsFab extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        accounts: state.accountsReducer.accounts
+        accounts: state.accountsReducer.accounts,
+        modal: state.modalReducer
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createAccount: (account) => dispatch(createAccount(account))
+        createAccount: (account) => dispatch(createAccount(account)),
+        showAccountsAddModal: () => dispatch(showAccountsAddModal())
     }
 }
 
@@ -118,8 +89,8 @@ const styles = StyleSheet.create({
     },
     input: {
         marginTop: 10,
-        borderWidth: 3,
-        borderColor: ACCENT,
+        borderWidth: 1,
+        borderColor: GREY,
         borderRadius: 5,
         paddingLeft: 10
     },

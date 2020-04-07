@@ -5,12 +5,22 @@ import { connect } from "react-redux"
 import Register from './src/screens/Register'
 import AuthStack from './src/components/AuthStack'
 import Home from './src/screens/Home'
+import IconTabs from './src/components/IconNavigation'
+import HelpersStack from './src/components/HelpersStack'
 
 class App extends Component {
 
     renderScreen = () => {
-        const { isLoggedIn, authError } = this.props
-        return (isLoggedIn && authError == null) ? <Home /> : <AuthStack />
+        const { isLoggedIn, authError, stackNavigation } = this.props
+        if (!isLoggedIn) {
+            return <AuthStack />
+        } else if (isLoggedIn) {
+            if (stackNavigation) {
+                return <HelpersStack />
+            } else {
+                return <Home />
+            }
+        }
     }
 
     render() {
@@ -26,7 +36,8 @@ class App extends Component {
 const mapStateToProps = (state) => {
     return {
         authError: state.authReducer.authError,
-        isLoggedIn: state.authReducer.isLoggedIn
+        isLoggedIn: state.authReducer.isLoggedIn,
+        stackNavigation: state.categoryReducer.stackNavigation
     }
 }
 

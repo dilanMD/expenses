@@ -8,7 +8,7 @@ import { logout } from '../../redux/actions/authActions'
 import firebase from 'firebase'
 import { ACCENT, ACCENT_DARK } from '../../components/Colors'
 
-class AccountsHeader extends Component {
+class CategoriesHeader extends Component {
     state = {
         total: ''
     }
@@ -19,7 +19,7 @@ class AccountsHeader extends Component {
         return accounts && accounts.map((account) => {
             let total = 0
             return account.userId == uid ?
-                total += account.initialAmount : null
+                total += Number(account.initialAmount) : null
         })
     }
 
@@ -61,7 +61,7 @@ export default compose(
     firestoreConnect([
         { collection: 'accounts' }
     ])
-)(AccountsHeader)
+)(CategoriesHeader)
 
 const styles = StyleSheet.create({
     header: {

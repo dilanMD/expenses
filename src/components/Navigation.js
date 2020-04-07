@@ -1,15 +1,12 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { createStackNavigator } from '@react-navigation/stack'
 import { Icon } from 'react-native-elements'
 
 import Accounts from '../screens/Accounts/Accounts'
-import Categories from '../screens/Categories'
-import Transactions from '../screens/Transactions'
+import Categories from '../screens/Categories/Categories'
+import Transactions from '../screens/Transactions/Transactions'
 import Budget from '../screens/Budget'
 import Overview from '../screens/Overview'
-import Register from '../screens/Register'
-import Login from '../screens/Login'
 
 const Tab = createBottomTabNavigator()
 
